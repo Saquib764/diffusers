@@ -296,6 +296,16 @@ class DreamBoothDataset(Dataset):
                 inst_img_path = [(x, concept["instance_prompt"]) for x in Path(concept["instance_data_dir"]).iterdir() if x.is_file() and x.suffix == '.jpg']
                 self.instance_images_path.extend(inst_img_path)
                 print(inst_img_path)
+            else:
+                inst_img_path = []
+                for x in Path(class_dir).iterdir():
+                    if x.is_file() and x.suffix == '.jpg':
+                        txt_path = x.with_suffix('.txt')
+                        txt = ""
+                        with open(txt_path) as f:
+                            txt = f.read()
+                        inst_img_path.append((x, txt))
+                self.instance_images_path.extend(inst_img_path)
 
             for class_dir in concept.get('custom_class_dirs', []):
                 inst_img_path = []
