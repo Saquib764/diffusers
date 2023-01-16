@@ -298,7 +298,7 @@ class DreamBoothDataset(Dataset):
                 print(inst_img_path)
             else:
                 inst_img_path = []
-                for x in Path(class_dir).iterdir():
+                for x in Path(concept["instance_data_dir"]).iterdir():
                     if x.is_file() and x.suffix == '.jpg':
                         txt_path = x.with_suffix('.txt')
                         txt = ""
