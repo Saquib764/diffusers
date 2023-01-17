@@ -293,7 +293,7 @@ class DreamBoothDataset(Dataset):
 
         supported_ext = ['.png', '.jpg', '.webp']
         for concept in concepts_list:
-            if concept.get('use_text_file_for_instance_prompt', False):
+            if not concept.get('use_text_file_for_instance_prompt', False):
                 inst_img_path = [(x, concept["instance_prompt"]) for x in Path(concept["instance_data_dir"]).iterdir() if x.is_file() and x.suffix in supported_ext]
                 self.instance_images_path.extend(inst_img_path)
                 print(inst_img_path)
