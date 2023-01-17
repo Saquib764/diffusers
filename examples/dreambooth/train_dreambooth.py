@@ -291,15 +291,16 @@ class DreamBoothDataset(Dataset):
         self.instance_images_path = []
         self.class_images_path = []
 
+        supported_ext = ['.png', '.jpg', '.webp']
         for concept in concepts_list:
             if concept.get('use_text_file_for_instance_prompt', False):
-                inst_img_path = [(x, concept["instance_prompt"]) for x in Path(concept["instance_data_dir"]).iterdir() if x.is_file() and x.suffix == '.jpg']
+                inst_img_path = [(x, concept["instance_prompt"]) for x in Path(concept["instance_data_dir"]).iterdir() if x.is_file() and x.suffix in supported_ext]
                 self.instance_images_path.extend(inst_img_path)
                 print(inst_img_path)
             else:
                 inst_img_path = []
                 for x in Path(concept["instance_data_dir"]).iterdir():
-                    if x.is_file() and x.suffix == '.jpg':
+                    if x.is_file() and x.suffix in supported_ext:
                         txt_path = x.with_suffix('.txt')
                         txt = ""
                         with open(txt_path) as f:
@@ -310,7 +311,7 @@ class DreamBoothDataset(Dataset):
             for class_dir in concept.get('custom_class_dirs', []):
                 inst_img_path = []
                 for x in Path(class_dir).iterdir():
-                    if x.is_file() and x.suffix == '.jpg':
+                    if x.is_file() and x.suffix in supported_ext:
                         txt_path = x.with_suffix('.txt')
                         txt = ""
                         with open(txt_path) as f:
