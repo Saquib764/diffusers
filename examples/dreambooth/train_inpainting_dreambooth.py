@@ -316,8 +316,9 @@ class DreamBoothDataset(Dataset):
         self.instance_images_path = []
         self.class_images_path = []
 
+        supported_ext = ['.png', '.jpg', '.webp']
         for concept in concepts_list:
-            inst_img_path = [(x, concept["instance_prompt"]) for x in Path(concept["instance_data_dir"]).iterdir() if x.is_file()]
+            inst_img_path = [(x, concept["instance_prompt"]) for x in Path(concept["instance_data_dir"]).iterdir() if x.is_file() and x.suffix in supported_ext]
             self.instance_images_path.extend(inst_img_path)
 
             if with_prior_preservation:
